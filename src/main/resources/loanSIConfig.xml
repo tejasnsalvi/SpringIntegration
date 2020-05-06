@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration
+		http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/stream
+		http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd">
+
+	<!-- Gateway -->
+	<int:gateway id="loan" service-interface="com.tejas.service.Loan" />
+
+	<!--Input channel -->
+	<int:channel id="readChannel" />
+
+
+	<!-- Splitter -->
+	<int:splitter input-channel="readChannel" ref="loanSplitter"
+		output-channel="splitterChannel" />
+	<beans:bean id="loanSplitter" class="com.tejas.service.LoanSplitter" />
+
+
+	<!-- Router -->
+	<int:router input-channel="splitterChannel" ref="loanRouter"
+		method="routeLoan" />
+	<beans:bean id="loanRouter" class="com.tejas.service.LoanRouter" />
+
+	<!-- Premium Channel -->
+	<int:channel id="premiumChannel">
+		<int:queue capacity="10" />
+	</int:channel>
+	<int:service-activator input-channel="premiumChannel"
+		ref="servactivator" method="processPremium" output-channel="processedLoanChannel" />
+
+
+	<!-- Executive Channel -->
+	<int:channel id="executiveChannel">
+		<int:queue capacity="10" />
+	</int:channel>
+	<int:service-activator input-channel="executiveChannel"
+		ref="servactivator" method="processExecutive" output-channel="processedLoanChannel" />
+
+	<!-- Std Channel -->
+	<int:channel id="stdChannel">
+		<int:queue capacity="10" />
+	</int:channel>
+	<int:service-activator input-channel="stdChannel"
+		ref="servactivator" method="processStd" output-channel="processedLoanChannel" />
+
+	<!-- Service Activator -->
+	<beans:bean id="servactivator" class="com.tejas.service.ServActivator" />
+
+	<!-- Aggregator -->
+	<int:channel id="processedLoanChannel" />
+	<int:aggregator input-channel="processedLoanChannel"
+		method="prepareDelivery" output-channel="deliveries">
+		<beans:bean class="com.tejas.service.LoanAggregator " />
+	</int:aggregator>
+
+	<int-stream:stdout-channel-adapter
+		id="deliveries" />
+	<int:poller id="poller" default="true" fixed-delay="10" />
+</beans:beans>

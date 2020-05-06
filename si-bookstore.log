@@ -1,0 +1,24 @@
+2020-05-05 00:28:02,252 INFO  [IntegrationRegistrar] - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2020-05-05 00:28:02,465 INFO  [DefaultConfiguringBeanFactoryPostProcessor] - No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2020-05-05 00:28:02,465 INFO  [DefaultConfiguringBeanFactoryPostProcessor] - No bean named 'taskScheduler' has been explicitly defined. Therefore, a default ThreadPoolTaskScheduler will be created.
+2020-05-05 00:28:03,014 INFO  [GatewayProxyFactoryBean$MethodInvocationGateway] - started loan
+2020-05-05 00:28:03,015 INFO  [GatewayProxyFactoryBean] - started loan
+2020-05-05 00:28:03,193 WARN  [ReleaseStrategyFactoryBean] - No annotated method found; falling back to SequenceSizeReleaseStrategy, target:com.tejas.service.LoanAggregator@e1e309, methodName:null
+2020-05-05 00:28:03,229 INFO  [EventDrivenConsumer] - Adding {splitter} as a subscriber to the 'readChannel' channel
+2020-05-05 00:28:03,230 INFO  [DirectChannel] - Channel 'org.springframework.context.support.ClassPathXmlApplicationContext@a294a6.readChannel' has 1 subscriber(s).
+2020-05-05 00:28:03,230 INFO  [EventDrivenConsumer] - started org.springframework.integration.config.ConsumerEndpointFactoryBean#0
+2020-05-05 00:28:03,230 INFO  [EventDrivenConsumer] - Adding {router} as a subscriber to the 'splitterChannel' channel
+2020-05-05 00:28:03,230 INFO  [DirectChannel] - Channel 'org.springframework.context.support.ClassPathXmlApplicationContext@a294a6.splitterChannel' has 1 subscriber(s).
+2020-05-05 00:28:03,230 INFO  [EventDrivenConsumer] - started org.springframework.integration.config.ConsumerEndpointFactoryBean#1
+2020-05-05 00:28:03,233 INFO  [PollingConsumer] - started org.springframework.integration.config.ConsumerEndpointFactoryBean#2
+2020-05-05 00:28:03,240 INFO  [PollingConsumer] - started org.springframework.integration.config.ConsumerEndpointFactoryBean#3
+2020-05-05 00:28:03,244 INFO  [PollingConsumer] - started org.springframework.integration.config.ConsumerEndpointFactoryBean#4
+2020-05-05 00:28:03,245 INFO  [EventDrivenConsumer] - Adding {aggregator} as a subscriber to the 'processedLoanChannel' channel
+2020-05-05 00:28:03,245 INFO  [DirectChannel] - Channel 'org.springframework.context.support.ClassPathXmlApplicationContext@a294a6.processedLoanChannel' has 1 subscriber(s).
+2020-05-05 00:28:03,245 INFO  [EventDrivenConsumer] - started org.springframework.integration.config.ConsumerEndpointFactoryBean#5
+2020-05-05 00:28:03,245 INFO  [EventDrivenConsumer] - Adding {stream:outbound-channel-adapter(character):deliveries.adapter} as a subscriber to the 'deliveries' channel
+2020-05-05 00:28:03,246 INFO  [DirectChannel] - Channel 'org.springframework.context.support.ClassPathXmlApplicationContext@a294a6.deliveries' has 1 subscriber(s).
+2020-05-05 00:28:03,246 INFO  [EventDrivenConsumer] - started deliveries.adapter
+2020-05-05 00:28:03,246 INFO  [EventDrivenConsumer] - Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2020-05-05 00:28:03,246 INFO  [PublishSubscribeChannel] - Channel 'org.springframework.context.support.ClassPathXmlApplicationContext@a294a6.errorChannel' has 1 subscriber(s).
+2020-05-05 00:28:03,246 INFO  [EventDrivenConsumer] - started _org.springframework.integration.errorLogger
